@@ -1,6 +1,5 @@
 import Booking from "../models/Booking.js";
 
-// Create a new booking
 export const createBooking = async (req, res) => {
   const newBooking = new Booking(req.body);
 
@@ -8,7 +7,7 @@ export const createBooking = async (req, res) => {
     const savedBooking = await newBooking.save();
     res.status(200).json({ 
         success: true, 
-        message: "Your Tour is Booked", 
+        message: "Your booking is confirmed", 
         data: savedBooking
     });
   } catch (error) {
@@ -16,13 +15,11 @@ export const createBooking = async (req, res) => {
     res.status(500).json({ 
         success: false, 
         message: "Internal Server Error",
-        error: error.message // Send the error message to the client for debugging
+        error: error.message
     });
   }
 };
 
-
-// Get a single booking by ID
 export const getBooking = async (req, res) => {
   const bookingId = req.params.id;
 
@@ -45,7 +42,6 @@ export const getBooking = async (req, res) => {
   }
 };
 
-// Get all bookings
 export const getAllBookings = async (req, res) => {
   try {
     const bookings = await Booking.find();
@@ -60,8 +56,43 @@ export const getAllBookings = async (req, res) => {
   }
 };
 
+
+export const getBookingByUser = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const userBookings = await Booking.find({ userId: userId });
+    res.status(200).json({
+      success: true,
+      message: "User bookings retrieved successfully",
+      data: userBookings,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Failed to get user bookings" });
+  }
+};
+export const getBookingsByFacility = async (req, res) => {
+  const facilityId = req.params.facilityId;
+
+  try {
+    const facilityBookings = await Booking.find({ facility: facilityId });
+    res.status(200).json({
+      success: true,
+      message: "Bookings for the facility retrieved successfully",
+      data: facilityBookings,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Failed to get facility bookings" });
+  }
+};
+
+
 export default {
   createBooking,
   getBooking,
   getAllBookings,
+  getBookingByUser,
+  getBookingsByFacility
 };

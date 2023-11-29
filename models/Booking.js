@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const bookingSchema = new mongoose.Schema(
   {
     userId: {
-      type: String
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
     userEmail: {
       type: String
@@ -12,11 +13,24 @@ const bookingSchema = new mongoose.Schema(
         type: String,
         required:true,
     },
+    recycleItemPrice: {
+        type: Number,
+        required:true,
+    },
+    pickupDate:{
+        type: Date,
+        required:true,
+    },
+    pickupTime:{
+        type: String,
+        required:true,
+    },
+
     fullName: {
       type: String,
       required: true,
     },
-    Address: {
+    address: {
       type: String,
       required: true,
     },
@@ -24,10 +38,7 @@ const bookingSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    bookAt: {
-      type: Date,
-      required: true,
-    },
+
     bookStatus: {
       type: String,
       default: "pending",
