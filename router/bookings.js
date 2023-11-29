@@ -7,8 +7,8 @@ const bookingRoute = express.Router();
 // Create a new review for a tour
 bookingRoute.post('/', createBooking);
 
-bookingRoute.get('/:id', getBooking);
+bookingRoute.get('/:id',verifyAdmin, getBooking);
 
-bookingRoute.post('/',verifyAdmin, getAllBookings);
+bookingRoute.get('/',verifyAdmin, getAllBookings);
 
 export default bookingRoute

@@ -17,6 +17,10 @@ const bookingSchema = new mongoose.Schema(
         type: Number,
         required:true,
     },
+    facility : {
+        type: String,
+        ref: "Facility",
+    },
     pickupDate:{
         type: Date,
         required:true,
